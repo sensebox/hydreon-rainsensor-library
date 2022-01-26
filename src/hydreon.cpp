@@ -32,8 +32,8 @@ void HYDREON::setContinuousMode(bool cmd) {
 
 void HYDREON::sendCmd(char cmd) {
   sensor.print(cmd);
-  sensor.print('\n');
   sensor.print('\r');
+  sensor.print('\n');
   sensor.flush();
   delay(1000);
 }
