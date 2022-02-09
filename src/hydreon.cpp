@@ -49,6 +49,26 @@ float HYDREON::getAcc() {
   else return 1;
 }
 
+float HYDREON::getEventAcc() {
+  recvWithEndMarker('R');
+  if (newData == true) {
+    acc = Rg15Parse(rain_sensitivity, "EventAcc");
+    newData = false;
+    return acc;
+  }
+  else return 1;
+}
+
+// float HYDREON::getTotalAcc() {
+//   recvWithEndMarker('R');
+//   if (newData == true) {
+//     acc = Rg15Parse(rain_sensitivity, "TotalAcc");
+//     newData = false;
+//     return acc;
+//   }
+//   else return 1;
+// }
+
 void HYDREON::setHighResolution(bool cmd) {
   if (cmd == true) {
     sendCmd('H');

@@ -15,6 +15,8 @@ class HYDREON
     void setContinuousMode(bool cmd);
     void pollContinuousData();
     float getAcc(); //get Accumulation data as float
+    float getEventAcc(); //get Accumulation since last boot data as float
+    //float getTotalAcc(); //get total Accumulation data as float
     void getAllData(); // ge
     void setHighResolution(bool cmd); // set to HighResolution mode if true 
     void sendCmd(char cmd); // helper function to send serial commands to the sensor
