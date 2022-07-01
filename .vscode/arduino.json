@@ -1,0 +1,6 @@
+{
+    "board": "sensebox:samd:sb",
+    "port": "COM8",
+    "sketch": "examples\\openSenseMap\\openSenseMap.ino",
+    "configuration": "power=on"
+}

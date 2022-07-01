@@ -3,15 +3,25 @@
 
 HYDREON rainsensor(Serial1); //
 
-void setup() {
- Serial.begin(9600);
- rainsensor.begin();
- delay(1000);
- 
+void setup()
+{
+    SerialUSB.begin(9600);
+    rainsensor.begin();
+    // rainsensor.setContinuousMode(true) //totest
+    rainsensor.setHighResolution(true);
+    SerialUSB.println("restart");
 }
 
-void loop() {
- Serial.println(rainsensor.getAcc());
- rainsensor.getAllData();
-delay(10000);
+void loop()
+{
+    rainsensor.readAllData();
+    SerialUSB.print(rainsensor.getAccumulation());
+    SerialUSB.print('\t');
+    SerialUSB.print(rainsensor.getEventAccumulation());
+    SerialUSB.print('\t');
+    SerialUSB.print(rainsensor.getTotalAccumulation());
+    SerialUSB.print('\t');
+    SerialUSB.println(rainsensor.getRainfallIntensity());
+    SerialUSB.println(rainsensor.getDataString());
+    delay(2000);
 }
