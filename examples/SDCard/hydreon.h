@@ -29,6 +29,7 @@ private:
   float accumulation;
   float eventAccumulation;
   float totalAccumulation;
+  float totalAccumulationTemp;
   float rainfallIntensity;
   int startIndex;
   int endIndex;

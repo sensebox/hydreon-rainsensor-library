@@ -1,6 +1,6 @@
 {
     "board": "sensebox:samd:sb",
     "port": "COM8",
-    "sketch": "examples\\openSenseMap\\openSenseMap.ino",
+    "sketch": "examples\\SDCard\\SDCard.ino",
     "configuration": "power=on"
 }

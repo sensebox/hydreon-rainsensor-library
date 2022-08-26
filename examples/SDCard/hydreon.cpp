@@ -8,26 +8,25 @@
 #include "WProgram.h"
 #endif
 #include "hydreon.h"
+#define HYDREON_SERIAL_DELAY 300
+
 HYDREON::HYDREON(Uart &serial) : sensor(serial) {}
 
 void HYDREON::begin()
 {
   sensor.begin(9600);  // opens serial port
   sensor.println('M'); // force Metric
-  sensor.println('H'); // high Reselution
+  sensor.println('H'); // high Resulution
   sensor.println('P'); // pooling mode (not continuous)
-  continuousMode = false;
-  delay(200);
+  delay(HYDREON_SERIAL_DELAY);
   while (sensor.available())
     sensor.read();
 }
 
 void HYDREON::readAllData()
 {
-  if (!continuousMode)
-    sensor.println('R');
-
-  delay(200);
+  sensor.println('R');
+  delay(HYDREON_SERIAL_DELAY);
   if (sensor.available())
   {
     while (sensor.available())
@@ -42,25 +41,18 @@ void HYDREON::readAllData()
     startIndex = data.indexOf("TotalAcc") + 8;
     endIndex = data.indexOf("mm,", startIndex);
     totalAccumulation = data.substring(startIndex, endIndex).toFloat();
+    // totalAccumulationTemp = data.substring(startIndex, endIndex).toFloat();
+    // totalAccumulation = max(totalAccumulation, totalAccumulationTemp); // fix to enforce monotonic increas on bug
     startIndex = data.indexOf("RInt") + 4;
     endIndex = data.indexOf("mmph", startIndex);
     rainfallIntensity = data.substring(startIndex, endIndex).toFloat();
   }
 }
 
-void HYDREON::setContinuousMode(bool continuous)
-{
-  continuousMode = continuous;
-  sensor.println('C' ? continuous : 'P');
-  delay(200);
-  while (sensor.available())
-    sensor.read();
-}
-
 void HYDREON::setHighResolution(bool high)
 {
   sensor.println('H' ? high : 'L');
-  delay(200);
+  delay(HYDREON_SERIAL_DELAY);
   while (sensor.available())
     sensor.read();
 }
@@ -68,7 +60,7 @@ void HYDREON::setHighResolution(bool high)
 void HYDREON::reset()
 {
   sensor.println('O');
-  delay(200);
+  delay(HYDREON_SERIAL_DELAY);
   while (sensor.available())
     sensor.read();
 }
