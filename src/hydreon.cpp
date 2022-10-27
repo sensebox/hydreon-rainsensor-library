@@ -1,5 +1,6 @@
 /*
   Hydreon Rainsensor Library for senseBox
+  (RG15Arduino Library builds unrobust connection)
 */
 
 #if ARDUINO >= 100
@@ -8,7 +9,7 @@
 #include "WProgram.h"
 #endif
 #include "hydreon.h"
-#define HYDREON_SERIAL_DELAY 300
+#define HYDREON_SERIAL_DELAY 1200 // large but necessary
 
 HYDREON::HYDREON(Uart &serial) : sensor(serial) {}
 
@@ -18,7 +19,7 @@ void HYDREON::begin()
   sensor.println('M'); // force Metric
   sensor.println('H'); // high Resulution
   sensor.println('P'); // pooling mode (not continuous)
-  delay(HYDREON_SERIAL_DELAY);
+  delay(3 * HYDREON_SERIAL_DELAY);
   while (sensor.available())
     sensor.read();
 }
@@ -41,11 +42,16 @@ void HYDREON::readAllData()
     startIndex = data.indexOf("TotalAcc") + 8;
     endIndex = data.indexOf("mm,", startIndex);
     totalAccumulation = data.substring(startIndex, endIndex).toFloat();
-    // totalAccumulationTemp = data.substring(startIndex, endIndex).toFloat();
-    // totalAccumulation = max(totalAccumulation, totalAccumulationTemp); // fix to enforce monotonic increas on bug
     startIndex = data.indexOf("RInt") + 4;
     endIndex = data.indexOf("mmph", startIndex);
     rainfallIntensity = data.substring(startIndex, endIndex).toFloat();
+  }
+  else
+  {
+    accumulation = -1;
+    eventAccumulation = -1;
+    totalAccumulation = -1;
+    rainfallIntensity = -1;
   }
 }
 
@@ -57,7 +63,7 @@ void HYDREON::setHighResolution(bool high)
     sensor.read();
 }
 
-void HYDREON::reset()
+void HYDREON::temporaryReset()
 {
   sensor.println('O');
   delay(HYDREON_SERIAL_DELAY);
