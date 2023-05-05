@@ -2,34 +2,38 @@
   Hydreon Rainsensor Library for senseBox
 */
 
-
+#if ARDUINO >= 100
+#include "Arduino.h"
+#else
+#include "WProgram.h"
+#endif
 
 #ifndef HYDREON_h
 #define HYDREON_h
-
 class HYDREON
 {
-  public:
-    HYDREON(Uart& serial);
-    void begin();
-    void setContinuousMode(bool cmd);
-    void pollContinuousData();
-    float getAcc(); //get Accumulation data as float
-    void getAllData(); // ge
-    void setHighResolution(bool cmd); // set to HighResolution mode if true 
-    void sendCmd(char cmd); // helper function to send serial commands to the sensor
-    void recvWithEndMarker(char cmd);
-    void showNewData();
-    float CharToFloat(const char *str); // convert char to float
-    float Rg15Parse(char* buffer, const char* item); //parse data from the buffer to convert to float
+public:
+  HYDREON(Uart &serial);
+  void begin();                      // start sensor
+  void readAllData();                // read all Data
+  void setHighResolution(bool high); // set to HighResolution mode if true
+  void temporaryReset();             // temporary reset past sensor measurements
+  float getAccumulation();           // get Accumulation since last request as float
+  float getEventAccumulation();      // get Event Accumulation as float
+  float getTotalAccumulation();      // get total Accumulation as float
+  float getRainfallIntensity();      // get rainfallIntensity as loat
+  String getDataString();            // get data String
 
-  private:
-    boolean newData = false;
-    const byte numChars = 32;
-    char rain_sensitivity[64]; // an array to store the received data
-    float acc = 0.0f;
-    Uart& sensor;
-
+private:
+  float accumulation;
+  float eventAccumulation;
+  float totalAccumulation;
+  float totalAccumulationTemp;
+  float rainfallIntensity;
+  int startIndex;
+  int endIndex;
+  String data;
+  Uart &sensor;
 };
 
 #endif
