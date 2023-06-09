@@ -1,0 +1,169 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable type="int" id="v/RRDEj2Y!);96Z;s,2V">pageNumber</variable>
+  </variables>
+  <block type="arduino_functions" id="QWW|$jB8+*EL;}|#uA" deletable="false" x="27" y="16">
+    <statement name="SETUP_FUNC">
+      <block type="sensebox_display_beginDisplay" id="P@.8,1h9@0JfsFT2c:=l">
+        <next>
+          <block type="variables_set_dynamic" id="1|]K9Ox#p#s5d1}mvSt]">
+            <field name="VAR" id="v/RRDEj2Y!);96Z;s,2V" variabletype="int">pageNumber</field>
+            <value name="VALUE">
+              <block type="math_number" id="mGfa[V(zc4|liaqojjKs">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="LOOP_FUNC">
+      <block type="controls_if" id="{$pm%-R41H7Qwxm]R2}R">
+        <value name="IF0">
+          <block type="sensebox_button" id="G/q`f`tV8VN%^sUX,s_p">
+            <field name="FUNCTION">wasPressed</field>
+            <field name="PIN">0</field>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set_dynamic" id="I+-aAb%IEpuq4wBxs.V-">
+            <field name="VAR" id="v/RRDEj2Y!);96Z;s,2V" variabletype="int">pageNumber</field>
+            <value name="VALUE">
+              <block type="math_modulo" id="2Y!?J60Yac1N1$XT@hw4">
+                <value name="DIVIDEND">
+                  <block type="math_arithmetic" id="#cQtZjednJyQ+:6A3r=p">
+                    <field name="OP">ADD</field>
+                    <value name="A">
+                      <block type="variables_get_dynamic" id="k0K6m#4yLA,oW[rwtk{{">
+                        <field name="VAR" id="v/RRDEj2Y!);96Z;s,2V" variabletype="int">pageNumber</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="@8WmRuux6x6`;;A=odCx">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="DIVISOR">
+                  <block type="math_number" id="kXw1O7g|BKtW~j0E3q6i">
+                    <field name="NUM">2</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="sensebox_display_clearDisplay" id="C8;`4_i/5P=wZ476g*:S">
+            <next>
+              <block type="sensebox_display_show" id="Ui}Ka9RGOjvr=1XP#}:D">
+                <statement name="SHOW">
+                  <block type="switch_case" id="fo,F$o/6*@SI?acTYYfB">
+                    <mutation xmlns="http://www.w3.org/1999/xhtml" case="1"></mutation>
+                    <value name="CONDITION">
+                      <block type="variables_get_dynamic" id="V1.ix7@;LLc^$`sDRC5#">
+                        <field name="VAR" id="v/RRDEj2Y!);96Z;s,2V" variabletype="int">pageNumber</field>
+                      </block>
+                    </value>
+                    <value name="CASECONDITION0">
+                      <block type="math_number" id="huBlhxF[Hg5Rxutmn@6f">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                    <statement name="CASE0">
+                      <block type="sensebox_display_fastPrint" id="t,vvaU1DxDCOT:My..,_">
+                        <value name="Title1">
+                          <block type="text" id="Ih(,jPNhPv0H4*Fo.A{0">
+                            <field name="TEXT">total Accumulation</field>
+                          </block>
+                        </value>
+                        <value name="Value1">
+                          <block type="sensebox_rainsensor_hydreon_rg15" id="[NfyqpQh!y%^u2w:5;Zu">
+                            <field name="SERIAL">Serial2</field>
+                            <field name="VALUE">getTotalAccumulation</field>
+                          </block>
+                        </value>
+                        <value name="Dimension1">
+                          <block type="text" id="k]z^g}/Le:^h{91?0jF8">
+                            <field name="TEXT">mm</field>
+                          </block>
+                        </value>
+                        <value name="Title2">
+                          <block type="text" id="H$-(H4G`H_14U$#:G,~M">
+                            <field name="TEXT">Rainfall Intensity</field>
+                          </block>
+                        </value>
+                        <value name="Value2">
+                          <block type="sensebox_rainsensor_hydreon_rg15" id="6Nf+TVHq{MGFhHB#.ysX">
+                            <field name="SERIAL">Serial2</field>
+                            <field name="VALUE">getRainfallIntensity</field>
+                          </block>
+                        </value>
+                        <value name="Dimension2">
+                          <block type="text" id="RQY2I$T]jDZjPovdZ:=:">
+                            <field name="TEXT">mm/h</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                    <value name="CASECONDITION1">
+                      <block type="math_number" id="EK#w-W0RaITA-t5t6Pre">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <statement name="CASE1">
+                      <block type="sensebox_display_fastPrint" id=")N$t!?J]TiNk`~5.%p-~">
+                        <value name="Title1">
+                          <block type="text" id=",)E$NMy;v3M,gl+=M-Z=">
+                            <field name="TEXT">Accumulation per Event</field>
+                          </block>
+                        </value>
+                        <value name="Value1">
+                          <block type="sensebox_rainsensor_hydreon_rg15" id=")U|Y{kIXyrN-d}l}HP/K">
+                            <field name="SERIAL">Serial2</field>
+                            <field name="VALUE">getEventAccumulation</field>
+                          </block>
+                        </value>
+                        <value name="Dimension1">
+                          <block type="text" id="7mll1Da3)*)!/8E$`q8/">
+                            <field name="TEXT">mm</field>
+                          </block>
+                        </value>
+                        <value name="Title2">
+                          <block type="text" id="?Ppdl![LxAz^2Q,zSYCg">
+                            <field name="TEXT">Accumulation since last loop</field>
+                          </block>
+                        </value>
+                        <value name="Value2">
+                          <block type="sensebox_rainsensor_hydreon_rg15" id="+]pz`!5.TQP+)a2~K!U3">
+                            <field name="SERIAL">Serial2</field>
+                            <field name="VALUE">getAccumulation</field>
+                          </block>
+                        </value>
+                        <value name="Dimension2">
+                          <block type="text" id="-m#KJ{s,Q3aNt9Q]m2;D">
+                            <field name="TEXT">mm</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                  </block>
+                </statement>
+                <next>
+                  <block type="time_delay" id="dFhhDu|8S)(oOM%K0g5Q">
+                    <value name="DELAY_TIME_MILI">
+                      <block type="math_number" id="h|A6e_ZdM)TO`JNn?AsV">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,6 +1,0 @@
-{
-    "board": "sensebox:samd:sb",
-    "port": "COM7",
-    "sketch": "examples\\blockly-test\\blockly-test.ino",
-    "configuration": "power=on"
-}
